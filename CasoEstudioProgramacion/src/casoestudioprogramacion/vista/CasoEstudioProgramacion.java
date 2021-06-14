@@ -14,12 +14,14 @@ public class CasoEstudioProgramacion {
       
     try {
         ConexionBD conexion = new ConexionBD();
-        conexion.conectarMySQL();
+        
     }
     catch (Exception e){
         System.out.println("Error al conectar con la base de datos"); 
+        
     }
     }
+  
   
 }
 
