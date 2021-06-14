@@ -3,12 +3,15 @@ package casoestudioprogramacion.controlador;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class ConexionBD {
 	private static Connection conexion;
 
+	/**
+	 * 
+	 */
 	public ConexionBD() {
 		conexion = null;
 		try {
@@ -18,7 +21,7 @@ public class ConexionBD {
 			
 			
 			if (conexion != null) {
-				System.out.println("Conexión exitosa");
+				System.out.println("ConexiÃ³n exitosa");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -27,14 +30,14 @@ public class ConexionBD {
 	}
 	/**
 	 * 
-	 * @return la conexión a la bd
+	 * @return la conexiÃ³n a la bd
 	 */
 	public Connection getConnection() {
 		return conexion;
 	}
 	
 	/**
-	 * Termina la conexión a ala base de datos
+	 * Termina la conexiï¿½n a ala base de datos
 	 */
 	public void desconect() {
 		conexion = null;
@@ -42,21 +45,33 @@ public class ConexionBD {
 			System.out.println("La base de datos se ha desconectado");
 		}
 	}
-/**
-	public void getDatos(){
-    try{
-    	Statement st = 
-	    String query = "SELECT * FROM seriestvitems ";
-	    rs = st.excuteQuery(query);
+	/**
+	 * 
+	 * @param codigo
+	 * @return
+	 */
+	public ResultSet consultarSerie(String codigo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		String query = "SELECT * FROM seriestvitems WHERE Codigo = ?";
+
+		try {
+			ConexionBD dbConexion = new ConexionBD();
+			Connection con = dbConexion.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, codigo);
+			rs = pstmt.executeQuery();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return rs;
+
+	}
 	
-	    
-	    while(rs.nex()){
-	        }
-	    }catch(Exception e){
-	    e.printStackTrace();
-    
-	    }
-    }
-   */
+	
+
 
 }
